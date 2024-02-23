@@ -1,12 +1,10 @@
 import express from "express";
+import transactionRoutes from "./transactionRoutes";
+import statementRoutes from "./statementRoutes";
+
 const router = express.Router();
 
-router.get("/example", (req, res) => {
-  res.json({ message: "Exemplo de rota da API" });
-});
-
-router.post("/clientes/:id/transacoes", (req, res) => {
-  res.status(200).json({ message: "POST de rota da API" });
-});
+router.use(transactionRoutes);
+router.use(statementRoutes);
 
 module.exports = router;

@@ -6,11 +6,11 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Bem-vindo ao servidor Express com PostgreSQL!");
+  res.send("Server started!");
 });
 
 app.use("/api", require("./routes"));
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
