@@ -1,18 +1,49 @@
 import { Request, Response } from "express";
 import { pool } from "../models/Client";
+import { Transaction } from "../typings/Transaction";
 
 export const getStatement = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const result = await pool.query(
-      "SELECT * FROM transactions WHERE client_id = $1",
+    const result = await pool.query("SELECT * FROM clientes WHERE id = $1", [
+      id,
+    ]);
+
+    const transaction = await pool.query(
+      "SELECT * FROM transacao WHERE id = $1",
       [id]
     );
 
-    res.status(200).json(result.rows);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { limite, valor } = result.rows[0];
+    const {
+      valor: transactionValue,
+      tipo,
+      descricao,
+      realizada_em,
+    } = transaction.rows[0];
+
+    return res.status(200).json({
+      saldo: {
+        total: valor,
+        data_extrato: new Date().toISOString(),
+        limite,
+      },
+      ultimas_transacoes: {
+        valor: transactionValue,
+        tipo,
+        descricao,
+        realizada_em,
+      },
+    });
   } catch (error) {
-    console.error("Erro ao obter extrato de transações:", error);
-    res.status(500).json({ message: "Erro ao obter extrato de transações" });
+    console.error("Error obtaining transaction statement:", error);
+    return res
+      .status(500)
+      .json({ message: "Error obtaining transaction statement" });
   }
 };

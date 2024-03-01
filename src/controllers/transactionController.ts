@@ -1,19 +1,48 @@
 import { Request, Response } from "express";
 import { pool } from "../models/Client";
+import { calculateNewBalance } from "../helpers/helpers";
+import { TRANSACTION_TYPE } from "../helpers/constants";
 
 export const createTransaction = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { valor, tipo, descricao } = req.body;
 
   try {
-    const result = await pool.query(
-      "INSERT INTO transactions (client_id, value, type, description) VALUES ($1, $2, $3, $4) RETURNING *",
-      [id, valor, tipo, descricao]
+    const { rows } = await pool.query("SELECT * FROM clientes WHERE id = $1", [
+      id,
+    ]);
+
+    if (!rows[0]) {
+      return res.status(404).json({
+        message: "Error: user not identified in the system",
+      });
+    }
+
+    const currentBalance = rows[0].valor;
+    const newBalance = calculateNewBalance(currentBalance, valor, tipo);
+
+    if (tipo === TRANSACTION_TYPE.DEBIT && newBalance < -rows[0].limite) {
+      return res.status(400).json({
+        message: "Error processing transaction: value cannot exceed limit",
+      });
+    }
+
+    await pool.query(
+      "INSERT INTO transacao (cliente_id, tipo, valor, descricao) VALUES ($1, $2, $3, $4) RETURNING *",
+      [id, tipo, valor, descricao]
     );
 
-    res.status(200).json(result.rows[0]);
+    const result = await pool.query(
+      "UPDATE clientes SET valor = $1 WHERE id = $2 RETURNING *",
+      [newBalance, id]
+    );
+
+    return res.status(200).json({
+      limite: result.rows[0].limite,
+      saldo: result.rows[0].valor,
+    });
   } catch (error) {
-    console.error("Erro ao criar transação:", error);
-    res.status(500).json({ message: "Erro ao criar transação" });
+    console.error("Error processing transaction:", error);
+    return res.status(500).json({ message: "Error processing transaction" });
   }
 };
