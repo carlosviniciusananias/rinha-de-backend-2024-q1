@@ -10,8 +10,8 @@ export const getStatement = async (req: Request, res: Response) => {
       id,
     ]);
 
-    const transaction = await pool.query(
-      "SELECT * FROM transacao WHERE id = $1",
+    const transactions = await pool.query(
+      "SELECT valor, tipo, descricao, realizada_em FROM transacao WHERE cliente_id = $1",
       [id]
     );
 
@@ -20,12 +20,6 @@ export const getStatement = async (req: Request, res: Response) => {
     }
 
     const { limite, valor } = result.rows[0];
-    const {
-      valor: transactionValue,
-      tipo,
-      descricao,
-      realizada_em,
-    } = transaction.rows[0];
 
     return res.status(200).json({
       saldo: {
@@ -33,12 +27,7 @@ export const getStatement = async (req: Request, res: Response) => {
         data_extrato: new Date().toISOString(),
         limite,
       },
-      ultimas_transacoes: {
-        valor: transactionValue,
-        tipo,
-        descricao,
-        realizada_em,
-      },
+      ultimas_transacoes: transactions.rows,
     });
   } catch (error) {
     console.error("Error obtaining transaction statement:", error);
