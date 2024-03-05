@@ -21,16 +21,24 @@ export const createTransaction = async (req: Request, res: Response) => {
     const currentBalance = rows[0].valor;
     const newBalance = calculateNewBalance(currentBalance, valor, tipo);
 
-    if (tipo === TRANSACTION_TYPE.CREDIT && newBalance > rows[0].limite) {
+    if (!Number.isInteger(valor)) {
       return res.status(400).json({
-        message: "Error processing transaction: value cannot exceed limit",
+        message: "Error processing transaction: value is not an integer",
       });
     }
 
-    if (tipo === TRANSACTION_TYPE.DEBIT && newBalance < 0) {
+    if (
+      (tipo === TRANSACTION_TYPE.CREDIT && newBalance > rows[0].limite) ||
+      (tipo === TRANSACTION_TYPE.DEBIT && newBalance < 0)
+    ) {
+      let errorMessage = "";
+      if (tipo === TRANSACTION_TYPE.CREDIT) {
+        errorMessage = "value cannot exceed limit";
+      } else {
+        errorMessage = "amount cannot be less than balance";
+      }
       return res.status(400).json({
-        message:
-          "Error processing transaction: amount cannot be less than balance",
+        message: `Error processing transaction: ${errorMessage}`,
       });
     }
 
