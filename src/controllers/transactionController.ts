@@ -12,7 +12,7 @@ export const createTransaction = async (req: Request, res: Response) => {
       id,
     ]);
 
-    if (!rows[0]) {
+    if (!rows[0] || rows[0].id < 1 || rows[0].id > 5) {
       return res.status(404).json({
         message: "Error: user not identified in the system",
       });
@@ -21,9 +21,16 @@ export const createTransaction = async (req: Request, res: Response) => {
     const currentBalance = rows[0].valor;
     const newBalance = calculateNewBalance(currentBalance, valor, tipo);
 
-    if (tipo === TRANSACTION_TYPE.DEBIT && newBalance < -rows[0].limite) {
+    if (tipo === TRANSACTION_TYPE.CREDIT && newBalance > rows[0].limite) {
       return res.status(400).json({
         message: "Error processing transaction: value cannot exceed limit",
+      });
+    }
+
+    if (tipo === TRANSACTION_TYPE.DEBIT && newBalance < 0) {
+      return res.status(400).json({
+        message:
+          "Error processing transaction: amount cannot be less than balance",
       });
     }
 
