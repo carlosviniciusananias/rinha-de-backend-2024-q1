@@ -27,18 +27,16 @@ export const createTransaction = async (req: Request, res: Response) => {
       });
     }
 
-    if (
-      (tipo === TRANSACTION_TYPE.CREDIT && newBalance > rows[0].limite) ||
-      (tipo === TRANSACTION_TYPE.DEBIT && newBalance < 0)
-    ) {
-      let errorMessage = "";
-      if (tipo === TRANSACTION_TYPE.CREDIT) {
-        errorMessage = "value cannot exceed limit";
-      } else {
-        errorMessage = "amount cannot be less than balance";
-      }
+    if (tipo === TRANSACTION_TYPE.CREDIT && newBalance > rows[0].limite) {
       return res.status(400).json({
-        message: `Error processing transaction: ${errorMessage}`,
+        message: "Error processing transaction: value cannot exceed limit",
+      });
+    }
+
+    if (tipo === TRANSACTION_TYPE.DEBIT && newBalance < 0) {
+      return res.status(422).json({
+        message:
+          "Error processing transaction: amount cannot be less than balance",
       });
     }
 

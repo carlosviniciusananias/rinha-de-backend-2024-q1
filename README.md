@@ -20,146 +20,40 @@ This is Gatling's results:
 
 ```
 ================================================================================
-2024-03-04 23:47:19                                         240s elapsed
----- Requests ------------------------------------------------------------------
-> Global                                                   (OK=44969  KO=14833 )
-> validações                                               (OK=50     KO=73    )
-> extratos                                                 (OK=1810   KO=0     )
-> débitos                                                  (OK=23799  KO=14760 )
-> créditos                                                 (OK=19310  KO=0     )
----- Errors --------------------------------------------------------------------
-> status.find.in(200,422), but actually found 400                 14760 (99,51%)
-> status.find.is(200), but actually found 400                        25 ( 0,17%)
-> status.find.in(422), but actually found 200                        20 ( 0,13%)
-> jmesPath(ultimas_transacoes[0].descricao).find.is(danada), but     12 ( 0,08%)
- actually found toma
-> jmesPath(ultimas_transacoes[0].descricao).find.is(danada), but      8 ( 0,05%)
- actually found descricao
-> jmesPath(ultimas_transacoes[0].descricao).find.is(devolve), bu      3 ( 0,02%)
-t actually found toma
-> jmesPath(saldo.total).find.is(0), but actually found 1              2 ( 0,01%)
-> jmesPath(ultimas_transacoes[0].descricao).find.is(devolve), bu      2 ( 0,01%)
-t actually found descricao
-> jmesPath(saldo.total).find.is(-25), but actually found 0            1 ( 0,01%)
-
----- extratos ------------------------------------------------------------------
-[########################################################################  ] 97%
-          waiting: 50     / active: 0      / done: 1810  
----- validação concorrência transações - c -------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 25    
----- débitos -------------------------------------------------------------------
-[#######################################################################-  ] 97%
-          waiting: 1100   / active: 1      / done: 38559 
----- validação concorrência transações - d -------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 25    
----- validação HTTP 404 --------------------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 1     
----- validação concorrência saldo - 0 ------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 1     
----- validação concorrência saldo - -25 ----------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 1     
----- validações ----------------------------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 5     
----- créditos ------------------------------------------------------------------
-[#######################################################################   ] 97%
-          waiting: 550    / active: 0      / done: 19310 
-================================================================================
-
-
-================================================================================
-2024-03-04 23:47:24                                         245s elapsed
----- Requests ------------------------------------------------------------------
-> Global                                                   (OK=46260  KO=15243 )
-> validações                                               (OK=50     KO=73    )
-> extratos                                                 (OK=1860   KO=0     )
-> débitos                                                  (OK=24490  KO=15170 )
-> créditos                                                 (OK=19860  KO=0     )
----- Errors --------------------------------------------------------------------
-> status.find.in(200,422), but actually found 400                 15170 (99,52%)
-> status.find.is(200), but actually found 400                        25 ( 0,16%)
-> status.find.in(422), but actually found 200                        20 ( 0,13%)
-> jmesPath(ultimas_transacoes[0].descricao).find.is(danada), but     12 ( 0,08%)
- actually found toma
-> jmesPath(ultimas_transacoes[0].descricao).find.is(danada), but      8 ( 0,05%)
- actually found descricao
-> jmesPath(ultimas_transacoes[0].descricao).find.is(devolve), bu      3 ( 0,02%)
-t actually found toma
-> jmesPath(saldo.total).find.is(0), but actually found 1              2 ( 0,01%)
-> jmesPath(ultimas_transacoes[0].descricao).find.is(devolve), bu      2 ( 0,01%)
-t actually found descricao
-> jmesPath(saldo.total).find.is(-25), but actually found 0            1 ( 0,01%)
-
----- extratos ------------------------------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 1860  
----- validação concorrência transações - c -------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 25    
----- débitos -------------------------------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 39660 
----- validação concorrência transações - d -------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 25    
----- validação HTTP 404 --------------------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 1     
----- validação concorrência saldo - 0 ------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 1     
----- validação concorrência saldo - -25 ----------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 1     
----- validações ----------------------------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 5     
----- créditos ------------------------------------------------------------------
-[##########################################################################]100%
-          waiting: 0      / active: 0      / done: 19860 
-================================================================================
-
-Simulation RinhaBackendCrebitosSimulation completed in 245 seconds
-Parsing log file(s)...
-Parsing log file(s) done in 1s.
-Generating reports...
-
-================================================================================
 ---- Global Information --------------------------------------------------------
-> request count                                      61503 (OK=46260  KO=15243 )
-> min response time                                      0 (OK=0      KO=0     )
-> max response time                                    216 (OK=216    KO=131   )
-> mean response time                                     6 (OK=7      KO=4     )
-> std deviation                                         13 (OK=14     KO=11    )
-> response time 50th percentile                          2 (OK=2      KO=1     )
-> response time 75th percentile                          4 (OK=4      KO=2     )
-> response time 95th percentile                         24 (OK=25     KO=19    )
-> response time 99th percentile                         76 (OK=80     KO=65    )
-> mean requests/sec                                251.033 (OK=188.816 KO=62.216)
+> request count                                      61503 (OK=61448  KO=55    )
+> min response time                                      0 (OK=0      KO=1     )
+> max response time                                   1040 (OK=1040   KO=381   )
+> mean response time                                    30 (OK=30     KO=105   )
+> std deviation                                        100 (OK=100    KO=115   )
+> response time 50th percentile                          3 (OK=3      KO=62    )
+> response time 75th percentile                         21 (OK=21     KO=156   )
+> response time 95th percentile                         94 (OK=94     KO=344   )
+> response time 99th percentile                        640 (OK=640    KO=363   )
+> mean requests/sec                                251.033 (OK=250.808 KO=0.224 )
 ---- Response Time Distribution ------------------------------------------------
-> t < 800 ms                                         46260 ( 75%)
-> 800 ms <= t < 1200 ms                                  0 (  0%)
+> t < 800 ms                                         61303 (100%)
+> 800 ms <= t < 1200 ms                                145 (  0%)
 > t >= 1200 ms                                           0 (  0%)
-> failed                                             15243 ( 25%)
+> failed                                                55 (  0%)
 ---- Errors --------------------------------------------------------------------
-> status.find.in(200,422), but actually found 400                 15170 (99,52%)
-> status.find.is(200), but actually found 400                        25 ( 0,16%)
-> status.find.in(422), but actually found 200                        20 ( 0,13%)
-> jmesPath(ultimas_transacoes[0].descricao).find.is(danada), but     12 ( 0,08%)
+> status.find.in(422), but actually found 200                        20 (36,36%)
+> jmesPath(ultimas_transacoes[0].descricao).find.is(danada), but     12 (21,82%)
  actually found toma
-> jmesPath(ultimas_transacoes[0].descricao).find.is(danada), but      8 ( 0,05%)
+> jmesPath(ultimas_transacoes[0].descricao).find.is(danada), but      8 (14,55%)
  actually found descricao
-> jmesPath(ultimas_transacoes[0].descricao).find.is(devolve), bu      3 ( 0,02%)
+> jmesPath(ultimas_transacoes[0].descricao).find.is(devolve), bu      3 ( 5,45%)
 t actually found toma
-> jmesPath(ultimas_transacoes[0].descricao).find.is(devolve), bu      2 ( 0,01%)
+> j.u.NoSuchElementException: No attribute named 'limite' is def      3 ( 5,45%)
+ined
+> jmesPath(saldo.total).find.is(0), but actually found 35995          2 ( 3,64%)
+> jmesPath(ultimas_transacoes[0].descricao).find.is(devolve), bu      2 ( 3,64%)
 t actually found descricao
-> jmesPath(saldo.total).find.is(0), but actually found 1              2 ( 0,01%)
-> jmesPath(saldo.total).find.is(-25), but actually found 0            1 ( 0,01%)
+> jmesPath(saldo.total).find.is(0), but actually found 2358           1 ( 1,82%)
+> jmesPath(saldo.total).find.is(0), but actually found 1327           1 ( 1,82%)
+> jmesPath(saldo.total).find.is(0), but actually found 2525           1 ( 1,82%)
+> jmesPath(saldo.total).find.is(0), but actually found 12800          1 ( 1,82%)
+> jmesPath(saldo.total).find.is(-25), but actually found 35994        1 ( 1,82%)
 ================================================================================
 ```
 
