@@ -1,6 +1,6 @@
 export interface Client {
   id: number;
-  cliente_id: number;
+  saldo: number;
   limite: number;
-  valor: number;
+  cliente_id: number;
 }

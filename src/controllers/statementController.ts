@@ -1,38 +1,28 @@
 import { Request, Response } from "express";
-import { pool } from "../models/Client";
-import { Transaction } from "../typings/Transaction";
+import { handleError } from "../helpers/helpers";
+import { getClient } from "../queries/Clients";
+import { getTransactions } from "../queries/Transaction";
 
 export const getStatement = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const Id = Number(id);
 
   try {
-    const result = await pool.query("SELECT * FROM clientes WHERE id = $1", [
-      id,
-    ]);
+    if (Id > 5)
+      return handleError(res, 404, "Error: user not identified in the system");
 
-    const transactions = await pool.query(
-      "SELECT valor, tipo, descricao, realizada_em FROM transacao WHERE cliente_id = $1",
-      [id]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const { limite, valor } = result.rows[0];
+    const user = await getClient(Id);
+    const transactions = await getTransactions(Id);
 
     return res.status(200).json({
       saldo: {
-        total: valor,
+        total: user[0].saldo,
         data_extrato: new Date().toISOString(),
-        limite,
+        limite: user[0].limite,
       },
-      ultimas_transacoes: transactions.rows,
+      ultimas_transacoes: transactions,
     });
   } catch (error) {
-    console.error("Error obtaining transaction statement:", error);
-    return res
-      .status(500)
-      .json({ message: "Error obtaining transaction statement" });
+    return handleError(res, 500, "Error: obtaining transaction statement");
   }
 };

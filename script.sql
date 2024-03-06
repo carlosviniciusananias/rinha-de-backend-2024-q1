@@ -16,9 +16,6 @@ CREATE TABLE transacoes(
     CONSTRAINT fk_cliente_id FOREIGN KEY (cliente_id) REFERENCES clientes(id)
 );
 
--- CREATE UNIQUE INDEX idx_clientes_id ON clientes USING btree (id);
-CREATE INDEX idx_transacoes_cliente_id ON transacoes USING btree (cliente_id);
-
 INSERT INTO clientes (nome, limite)
 VALUES
   ('o barato sai caro', 1000 * 100),

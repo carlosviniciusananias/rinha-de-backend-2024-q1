@@ -1,3 +1,4 @@
+import { Response } from "express";
 import { TRANSACTION_TYPE } from "./constants";
 
 export const calculateNewBalance = (
@@ -10,4 +11,12 @@ export const calculateNewBalance = (
   } else {
     return Number(currentBalance) - transactionAmount;
   }
+};
+
+export const handleError = (
+  res: Response,
+  statusCode: number,
+  message: string
+) => {
+  return res.status(statusCode).json({ message });
 };
