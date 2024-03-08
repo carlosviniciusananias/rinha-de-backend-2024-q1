@@ -6,3 +6,4 @@ const router = express.Router();
 router.get("/clientes/:id/extrato", getStatement);
 
 export default router;
+

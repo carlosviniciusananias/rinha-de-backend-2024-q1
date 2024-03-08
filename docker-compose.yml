@@ -2,7 +2,9 @@ version: "3.5"
 
 services:
   api01: &api
-    image: carlosviniciusananias1/ananias_rinha_backend_nodejs:latest
+    image: carlosviniciusananias1/rinha_backend_nodejs:latest
+    ports:
+      - "8081:8081"
     # Lembre-se de que seu serviço HTTP deve estar hospedado num repositório
     # publicamente acessível! Ex.: hub.docker.com
     hostname: api01
@@ -13,15 +15,15 @@ services:
       - PASSWORD_DB=@nan1as
       - DATABASE=balance
       - MAX_CONNECTION_DB=1
-      - PORT=8080
+      - PORT=8081
 
     # Não é necessário expor qualquer porta além da porta do load balancer,
     # mas é comum as pessoas o fazerem para testarem suas APIs e conectarem
     # ao banco de dados na fase de desenvolvimento.
     expose:
-      - "8080"
+      - "8081"
     depends_on:
-      - db
+      - db 
     ulimits:
       nproc: 1000000
       nofile:
@@ -36,6 +38,11 @@ services:
   api02:
     <<: *api
     hostname: app2
+    ports:
+      - "8082:8082"
+    environment:
+      - DB_HOSTNAME=localhost
+      - PORT=8082
 
   nginx:
     image: nginx:latest

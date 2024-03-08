@@ -16,10 +16,10 @@ CREATE TABLE transacoes(
     CONSTRAINT fk_cliente_id FOREIGN KEY (cliente_id) REFERENCES clientes(id)
 );
 
-INSERT INTO clientes (nome, limite)
+INSERT INTO clientes (cliente_id, nome, limite)
 VALUES
-  ('o barato sai caro', 1000 * 100),
-  ('zan corp ltda', 800 * 100),
-  ('les cruders', 10000 * 100),
-  ('padaria joia de cocaia', 100000 * 100),
-  ('kid mais', 5000 * 100);
+  (1, 'o barato sai caro', 1000 * 100),
+  (2, 'zan corp ltda', 800 * 100),
+  (3, 'les cruders', 10000 * 100),
+  (4, 'padaria joia de cocaia', 100000 * 100),
+  (5, 'kid mais', 5000 * 100);
